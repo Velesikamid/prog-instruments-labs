@@ -1,7 +1,9 @@
 ﻿from math import sqrt
+
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
+
 n = 115
 a = 0
 sigma = 9
