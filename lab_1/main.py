@@ -73,13 +73,13 @@ def main():
     print("ЧАСТЬ I - НОРМАЛЬНОЕ РАСПРЕДЕЛЕНИЕ")
     print("=" * 60)
 
-    n = 115
-    a = 0
-    sigma = 9
+    N = 115
+    A = 0
+    SIGMA = 9
     np.random.seed(42)
 
-    print(f"Параметры: a = {a}, σ = {sigma}, n = {n}")
-    X = np.random.normal(a, sigma, n)
+    print(f"Параметры: a = {A}, σ = {SIGMA}, n = {N}")
+    X = np.random.normal(A, SIGMA, N)
     plt.plot(X, marker=".", linestyle="")
     plt.show()
     abs_freq, bin_edges = np.histogram(X, bins="sturges")
@@ -92,7 +92,7 @@ def main():
 
     print(f"\n1.2. Сумма абсолютных частот: {total_abs_freq}")
     rel_freq, bin_edges_rel = np.histogram(X, bins="sturges", density=False)
-    rel_freq = rel_freq / n
+    rel_freq = rel_freq / N
 
     print("\n1.3. Интервальный ряд относительных частот:")
     print("Интервал\t\tОтносительная частота")
@@ -142,7 +142,7 @@ def main():
         label="Эмпирическая",
     )
     x_theor = np.linspace(X.min(), X.max(), 1000)
-    y_theor = stats.norm.pdf(x_theor, a, sigma)
+    y_theor = stats.norm.pdf(x_theor, A, SIGMA)
     plt.plot(x_theor, y_theor, "r-", linewidth=2, label="Теоретическая")
     plt.title("Относительные частоты + теоретическая кривая")
     plt.xlabel("Значения")
@@ -176,7 +176,7 @@ def main():
         edgecolor="black",
         label="Эмпирическая ФР",
     )
-    y_theor_cdf = stats.norm.cdf(x_theor, a, sigma)
+    y_theor_cdf = stats.norm.cdf(x_theor, A, SIGMA)
     plt.plot(x_theor, y_theor_cdf, "r-", label="Теоретическая ФР")
     plt.title("Функции распределения")
     plt.xlabel("Значения")
@@ -223,19 +223,19 @@ def main():
         print(f"{key:15}\t{manual:.6f}\t\t{builtin:.6f}")
 
     print("\n3.2. УВЕЛИЧЕНИЕ ОБЪЕМА ВЫБОРКИ В 60 РАЗ")
-    n_large = n * 60
-    X_large = np.random.normal(a, sigma, n_large)
+    n_large = N * 60
+    X_large = np.random.normal(A, SIGMA, n_large)
     large_results = builtin_stats(X_large)
     print("Параметр\t\tИсходная выборка\tБольшая выборка\tТеоретическое")
     print("-" * 80)
     theoretical = {
-        "mean": a,
-        "median": a,
-        "mode": a,
-        "variance": sigma**2,
-        "corrected_variance": sigma**2,
-        "std": sigma,
-        "corrected_std": sigma,
+        "mean": A,
+        "median": A,
+        "mode": A,
+        "variance": SIGMA**2,
+        "corrected_variance": SIGMA**2,
+        "std": SIGMA,
+        "corrected_std": SIGMA,
         "skewness": 0,
         "kurtosis": 0,
     }
@@ -256,21 +256,21 @@ def main():
     print("- 20-25 интервалов: слишком много, появляется излишняя детализация")
     print(f"Оптимальное число: {len(abs_freq)}",
           "интервалов (по правилу Стёрджеса)")
-    theoretical_prob = (stats.norm.cdf(modal_interval[1], a, sigma) -
-                        stats.norm.cdf(modal_interval[0], a, sigma))
+    theoretical_prob = (stats.norm.cdf(modal_interval[1], A, SIGMA) -
+                        stats.norm.cdf(modal_interval[0], A, SIGMA))
 
     print(f"\nB) Модальный интервал: [{modal_interval[0]:.3f},",
           f"{modal_interval[1]:.3f})")
     print(f"   Оценка вероятности: {modal_freq:.4f}")
     print(f"   Теоретическая вероятность: {theoretical_prob:.4f}")
     empirical_cdf_modal = len(X[X <= modal_interval[1]]) / len(X)
-    theoretical_cdf_modal = stats.norm.cdf(modal_interval[1], a, sigma)
+    theoretical_cdf_modal = stats.norm.cdf(modal_interval[1], A, SIGMA)
 
     print("\nC) Функция распределения в правой границе модального интервала:")
     print(f"   Эмпирическая оценка: {empirical_cdf_modal:.4f}")
     print(f"   Теоретическое значение: {theoretical_cdf_modal:.4f}")
-    theoretical_Q1 = stats.norm.ppf(0.25, a, sigma)
-    theoretical_Q3 = stats.norm.ppf(0.75, a, sigma)
+    theoretical_Q1 = stats.norm.ppf(0.25, A, SIGMA)
+    theoretical_Q3 = stats.norm.ppf(0.75, A, SIGMA)
     theoretical_IQR = theoretical_Q3 - theoretical_Q1
     theoretical_lower = theoretical_Q1 - 1.5 * theoretical_IQR
     theoretical_upper = theoretical_Q3 + 1.5 * theoretical_IQR
@@ -293,22 +293,22 @@ def main():
     print("ЧАСТЬ II - ТРЕУГОЛЬНОЕ РАСПРЕДЕЛЕНИЕ")
     print("=" * 60)
 
-    left = -2
-    right = 4
-    mode = 1
-    k_interval = 3
-    epsilon = 0.006
+    LEFT = -2
+    RIGHT = 4
+    MODE = 1
+    K_INTERVAL = 3
+    EPSILON = 0.006
 
     print("Параметры треугольного распределения:")
-    print(f"  Левая граница: {left}")
-    print(f"  Правая граница: {right}")
-    print(f"  Мода: {mode}")
-    print(f"  Анализируемый интервал: {k_interval}")
-    print(f"  Точность ε: {epsilon}")
-    Y = np.random.triangular(left, mode, right, n)
+    print(f"  Левая граница: {LEFT}")
+    print(f"  Правая граница: {RIGHT}")
+    print(f"  Мода: {MODE}")
+    print(f"  Анализируемый интервал: {K_INTERVAL}")
+    print(f"  Точность ε: {EPSILON}")
+    Y = np.random.triangular(LEFT, MODE, RIGHT, N)
 
-    print(f"\n1. Моделирование выборки Y ~ Triangle({left}, {mode}, {right})")
-    print(f"   Объем выборки: {n}")
+    print(f"\n1. Моделирование выборки Y ~ Triangle({LEFT}, {MODE}, {RIGHT})")
+    print(f"   Объем выборки: {N}")
     plt.figure(figsize=(12, 5))
 
     plt.subplot(1, 2, 1)
@@ -321,12 +321,12 @@ def main():
         edgecolor="black",
         label="Эмпирическая",
     )
-    x_theor_triang = np.linspace(left, right, 1000)
+    x_theor_triang = np.linspace(LEFT, RIGHT, 1000)
     y_theor_triang = stats.triang.pdf(
         x_theor_triang,
-        (mode - left) / (right - left),
-        loc=left,
-        scale=right - left
+        (MODE - LEFT) / (RIGHT - LEFT),
+        loc=LEFT,
+        scale=RIGHT - LEFT
     )
     plt.plot(
         x_theor_triang,
@@ -355,14 +355,14 @@ def main():
     upper_whisker_Y = Q3_Y + 1.5 * IQR_Y
     outliers_Y = Y[(Y < lower_whisker_Y) | (Y > upper_whisker_Y)]
     triang_dist = stats.triang(
-        (mode - left) / (right - left),
-        loc=left,
-        scale=right - left
+        (MODE - LEFT) / (RIGHT - LEFT),
+        loc=LEFT,
+        scale=RIGHT - LEFT
     )
     theoretical_outlier_prob = triang_dist.cdf(lower_whisker_Y) + (
         1 - triang_dist.cdf(upper_whisker_Y)
     )
-    theoretical_outliers_count = theoretical_outlier_prob * n
+    theoretical_outliers_count = theoretical_outlier_prob * N
 
     print("\n3. Статистика бокс-плота Y:")
     print(f"   Q1: {Q1_Y:.4f}")
@@ -378,11 +378,11 @@ def main():
     print("\n4. Точечные оценки параметров Y:")
     for key, value in Y_results.items():
         print(f"   {key:20}: {value:.6f}")
-    theoretical_mean_triang = (left + mode + right) / 3
+    theoretical_mean_triang = (LEFT + MODE + RIGHT) / 3
     theoretical_median_triang = triang_dist.median()
     theoretical_var_triang = (
-        left**2 + right**2 + mode**2 -
-        left * right - left * mode - right * mode
+        LEFT**2 + RIGHT**2 + MODE**2 -
+        LEFT * RIGHT - LEFT * MODE - RIGHT * MODE
     ) / 18
 
     print("\n   Теоретические значения:")
@@ -391,14 +391,14 @@ def main():
     print(f"   Дисперсия: {theoretical_var_triang:.6f}")
 
     optimal_n_triang, achieved_epsilon_triang = find_sample_size_triang(
-        left, mode, right, epsilon
+        LEFT, MODE, RIGHT, EPSILON
     )
 
     print("\n5. ПОДБОР ОБЪЕМА ВЫБОРКИ ДЛЯ ТРЕУГОЛЬНОГО РАСПРЕДЕЛЕНИЯ:")
-    print(f"   Целевая точность ε: {epsilon}")
+    print(f"   Целевая точность ε: {EPSILON}")
     print(f"   Найденный объем выборки: {optimal_n_triang}")
     print(f"   Достигнутая точность: {achieved_epsilon_triang:.6f}")
-    Y_optimal = np.random.triangular(left, mode, right, optimal_n_triang)
+    Y_optimal = np.random.triangular(LEFT, MODE, RIGHT, optimal_n_triang)
     plt.figure(figsize=(10, 6))
     plt.hist(
         Y_optimal,
@@ -437,13 +437,13 @@ def main():
         density=False
     )
     rel_freq_Y = rel_freq_Y / len(Y)
-    if k_interval - 1 < len(rel_freq_Y):
-        k_idx = k_interval - 1
+    if K_INTERVAL - 1 < len(rel_freq_Y):
+        k_idx = K_INTERVAL - 1
         k_interval_prob = rel_freq_Y[k_idx]
         k_interval_range = (bin_edges_Y[k_idx], bin_edges_Y[k_idx + 1])
         k_theoretical_prob = (triang_dist.cdf(k_interval_range[1]) -
                               triang_dist.cdf(k_interval_range[0]))
-        print(f"A) Вероятность попадания в {k_interval}-й интервал:")
+        print(f"A) Вероятность попадания в {K_INTERVAL}-й интервал:")
         print(f"   Интервал: [{k_interval_range[0]:.3f},",
               f"{k_interval_range[1]:.3f})")
         print(f"   Оценка вероятности: {k_interval_prob:.4f}")
@@ -463,7 +463,7 @@ def main():
             k_interval_range[1],
             alpha=0.5,
             color="red",
-            label=f"{k_interval}-й интервал\nВероятность: \
+            label=f"{K_INTERVAL}-й интервал\nВероятность: \
                     {k_interval_prob:.4f}",
         )
         plt.plot(
@@ -473,7 +473,7 @@ def main():
             linewidth=2,
             label="Теоретическая"
         )
-        plt.title(f"{k_interval}-й интервал группировки")
+        plt.title(f"{K_INTERVAL}-й интервал группировки")
         plt.xlabel("Значения")
         plt.ylabel("Плотность")
         plt.legend()
@@ -481,7 +481,7 @@ def main():
         plt.show()
     else:
         print(
-            f"Интервал {k_interval} выходит за пределы группировки",
+            f"Интервал {K_INTERVAL} выходит за пределы группировки",
             f"(всего {len(rel_freq_Y)} интервалов)"
         )
 
