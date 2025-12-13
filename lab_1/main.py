@@ -80,7 +80,7 @@ plt.hist(
 x_theor = np.linspace(X.min(), X.max(), 1000)
 y_theor = stats.norm.pdf(x_theor, a, sigma)
 plt.plot(x_theor, y_theor, "r-", linewidth=2, label="Теоретическая")
-plt.title(f"Относительные частоты + теоретическая кривая")
+plt.title("Относительные частоты + теоретическая кривая")
 plt.xlabel("Значения")
 plt.ylabel("Плотность")
 plt.legend()
@@ -103,7 +103,6 @@ plt.legend()
 plt.subplot(2, 3, 5)
 x_sorted = np.sort(X)
 y_ecdf = np.arange(1, len(X) + 1) / len(X)
-# plt.step(x_sorted, y_ecdf, where="post", label="Эмпирическая ФР")
 plt.hist(
     x_sorted,
     bins="sturges",
@@ -135,7 +134,7 @@ lower_whisker = Q1 - 1.5 * IQR
 upper_whisker = Q3 + 1.5 * IQR
 outliers = X[(X < lower_whisker) | (X > upper_whisker)]
 
-print(f"\n2.5. Статистика бокс-плота:")
+print("\n2.5. Статистика бокс-плота:")
 print(f"Q1 (25-й перцентиль): {Q1:.4f}")
 print(f"Q2 (Медиана): {Q2:.4f}")
 print(f"Q3 (75-й перцентиль): {Q3:.4f}")
@@ -202,7 +201,7 @@ print("-" * 60)
 for key in manual_results.keys():
     print(f"{key:15}\t{manual_results[key]:.6f}\t\t{builtin_results[key]:.6f}")
 
-print(f"\n3.2. УВЕЛИЧЕНИЕ ОБЪЕМА ВЫБОРКИ В 60 РАЗ")
+print("\n3.2. УВЕЛИЧЕНИЕ ОБЪЕМА ВЫБОРКИ В 60 РАЗ")
 n_large = n * 60
 X_large = np.random.normal(a, sigma, n_large)
 large_results = builtin_stats(X_large)
@@ -220,12 +219,10 @@ theoretical = {
     "kurtosis": 0,
 }
 for key in builtin_results.keys():
-    print(
-        f"{key:15}\t\t{builtin_results[key]:.6f}",
-        f"\t{large_results[key]:.6f}",
-        f"\t{theoretical.get(key, 'N/A'):.6f}",
-        sep="\t"
-    )
+    val1 = builtin_results[key]
+    val2 = large_results[key]
+    val3 = theoretical.get(key, 'N/A')
+    print(f"{key:15}\t\t{val1:.6f}\t\t{val2:.6f}\t\t{val3:.6f}")
 
 print("\n" + "=" * 60)
 print("ОТВЕТЫ НА ВОПРОСЫ ЧАСТИ I")
@@ -236,10 +233,8 @@ print("Неоптимальные интервалы:")
 print("- 2-4 интервала: слишком мало, теряем информацию о форме распределения")
 print("- 20-25 интервалов: слишком много, появляется излишняя детализация")
 print(f"Оптимальное число: {len(abs_freq)} интервалов (по правилу Стёрджеса)")
-theoretical_prob = stats.norm.cdf(
-    modal_interval[1], a, sigma) - stats.norm.cdf(
-    modal_interval[0], a, sigma
-)
+theoretical_prob = (stats.norm.cdf(modal_interval[1], a, sigma) -
+                    stats.norm.cdf(modal_interval[0], a, sigma))
 
 print(f"\nB) Модальный интервал: [{modal_interval[0]:.3f},",
       f"{modal_interval[1]:.3f})")
@@ -248,7 +243,7 @@ print(f"   Теоретическая вероятность: {theoretical_prob:
 empirical_cdf_modal = len(X[X <= modal_interval[1]]) / len(X)
 theoretical_cdf_modal = stats.norm.cdf(modal_interval[1], a, sigma)
 
-print(f"\nC) Функция распределения в правой границе модального интервала:")
+print("\nC) Функция распределения в правой границе модального интервала:")
 print(f"   Эмпирическая оценка: {empirical_cdf_modal:.4f}")
 print(f"   Теоретическое значение: {theoretical_cdf_modal:.4f}")
 theoretical_Q1 = stats.norm.ppf(0.25, a, sigma)
@@ -281,7 +276,7 @@ mode = 1
 k_interval = 3
 epsilon = 0.006
 
-print(f"Параметры треугольного распределения:")
+print("Параметры треугольного распределения:")
 print(f"  Левая граница: {left}")
 print(f"  Правая граница: {right}")
 print(f"  Мода: {mode}")
@@ -346,7 +341,7 @@ theoretical_outlier_prob = triang_dist.cdf(lower_whisker_Y) + (
 )
 theoretical_outliers_count = theoretical_outlier_prob * n
 
-print(f"\n3. Статистика бокс-плота Y:")
+print("\n3. Статистика бокс-плота Y:")
 print(f"   Q1: {Q1_Y:.4f}")
 print(f"   Q3: {Q3_Y:.4f}")
 print(f"   IQR: {IQR_Y:.4f}")
@@ -357,7 +352,7 @@ print(
 )
 Y_results = builtin_stats(Y)
 
-print(f"\n4. Точечные оценки параметров Y:")
+print("\n4. Точечные оценки параметров Y:")
 for key, value in Y_results.items():
     print(f"   {key:20}: {value:.6f}")
 theoretical_mean_triang = (left + mode + right) / 3
@@ -366,7 +361,7 @@ theoretical_var_triang = (
     left**2 + right**2 + mode**2 - left * right - left * mode - right * mode
 ) / 18
 
-print(f"\n   Теоретические значения:")
+print("\n   Теоретические значения:")
 print(f"   Среднее: {theoretical_mean_triang:.6f}")
 print(f"   Медиана: {theoretical_median_triang:.6f}")
 print(f"   Дисперсия: {theoretical_var_triang:.6f}")
@@ -394,7 +389,7 @@ optimal_n_triang, achieved_epsilon_triang = find_sample_size_triang(
     left, mode, right, epsilon
 )
 
-print(f"\n5. ПОДБОР ОБЪЕМА ВЫБОРКИ ДЛЯ ТРЕУГОЛЬНОГО РАСПРЕДЕЛЕНИЯ:")
+print("\n5. ПОДБОР ОБЪЕМА ВЫБОРКИ ДЛЯ ТРЕУГОЛЬНОГО РАСПРЕДЕЛЕНИЯ:")
 print(f"   Целевая точность ε: {epsilon}")
 print(f"   Найденный объем выборки: {optimal_n_triang}")
 print(f"   Достигнутая точность: {achieved_epsilon_triang:.6f}")
@@ -412,7 +407,7 @@ plt.hist(
 y_theor_opt = triang_dist.pdf(x_theor_triang)
 plt.plot(x_theor_triang, y_theor_opt, "r-", linewidth=2, label="Теоретическая")
 plt.title(
-    f"Треугольное распределение (n={optimal_n_triang}, " +
+    f"Треугольное распределение (n={optimal_n_triang}, "
     f"ε={achieved_epsilon_triang:.6f})"
 )
 plt.xlabel("Значения")
@@ -431,10 +426,8 @@ if k_interval - 1 < len(rel_freq_Y):
     k_idx = k_interval - 1
     k_interval_prob = rel_freq_Y[k_idx]
     k_interval_range = (bin_edges_Y[k_idx], bin_edges_Y[k_idx + 1])
-    k_theoretical_prob = triang_dist.cdf(
-        k_interval_range[1]) - triang_dist.cdf(
-        k_interval_range[0]
-    )
+    k_theoretical_prob = (triang_dist.cdf(k_interval_range[1]) -
+                          triang_dist.cdf(k_interval_range[0]))
     print(f"A) Вероятность попадания в {k_interval}-й интервал:")
     print(f"   Интервал: [{k_interval_range[0]:.3f},",
           f"{k_interval_range[1]:.3f})")
