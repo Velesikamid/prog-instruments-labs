@@ -147,6 +147,8 @@ print(f"Количество выбросов: {len(outliers)}")
 print("\n" + "=" * 60)
 print("3. ТОЧЕЧНОЕ ОЦЕНИВАНИЕ ПАРАМЕТРОВ")
 print("=" * 60)
+
+
 def manual_stats(data):
     n = len(data)
     mean = np.sum(data) / n
@@ -175,6 +177,8 @@ def manual_stats(data):
         "skewness": skewness,
         "kurtosis": kurtosis,
     }
+
+
 def builtin_stats(data):
     return {
         "mean": np.mean(data),
@@ -187,6 +191,8 @@ def builtin_stats(data):
         "skewness": stats.skew(data),
         "kurtosis": stats.kurtosis(data),
     }
+
+
 manual_results = manual_stats(X)
 builtin_results = builtin_stats(X)
 
@@ -364,6 +370,8 @@ print(f"\n   Теоретические значения:")
 print(f"   Среднее: {theoretical_mean_triang:.6f}")
 print(f"   Медиана: {theoretical_median_triang:.6f}")
 print(f"   Дисперсия: {theoretical_var_triang:.6f}")
+
+
 def find_sample_size_triang(left, mode, right, epsilon=0.006, max_n=1000000):
     test_sizes = [100, 500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000]
     triang_dist = stats.triang(
@@ -380,6 +388,8 @@ def find_sample_size_triang(left, mode, right, epsilon=0.006, max_n=1000000):
         if max_diff <= epsilon:
             return n_test, max_diff
     return max_n, max_diff
+
+
 optimal_n_triang, achieved_epsilon_triang = find_sample_size_triang(
     left, mode, right, epsilon
 )
