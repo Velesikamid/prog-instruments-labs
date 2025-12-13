@@ -185,7 +185,7 @@ def main() -> int:
         "Самарский Государственный Университет",
     ]
     access_token = (
-        "5ccf39195ccf39195ccf3919b15fd0d35d55ccf5ccf39193bcf1b3c96d8f575bf181488"
+        "5ccf39195ccf39195ccf3919b15fd0d35d55ccf5ccf39193bcf1b3c96d8f575bf1814888"
     )
     v = 5.199
     count = 100
