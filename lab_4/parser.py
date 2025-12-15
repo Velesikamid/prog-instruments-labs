@@ -87,9 +87,10 @@ class Parser:
         Note:
             Обновляет внутренний атрибут __number_of_comments.
         """
-        self.__number_of_comments = requests.get(self.__url, self.__params).json()[
-            "response"
-        ]["count"]
+        self.__number_of_comments = requests.get(
+            self.__url,
+            self.__params
+        ).json()["response"]["count"]
 
     def get_comments(self) -> list[str]:
         """
@@ -114,7 +115,10 @@ class Parser:
 
         while len(comments) < self.__number_of_comments:
             comments.extend(
-                requests.get(self.__url, self.__params).json()["response"]["items"]
+                requests.get(
+                    self.__url,
+                    self.__params
+                ).json()["response"]["items"]
             )
             self.__params["offset"] += self.__params["count"]
 

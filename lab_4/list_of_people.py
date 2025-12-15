@@ -24,7 +24,7 @@ def delete_trash(comments: list[str], blacklist: list[str]) -> list[str]:
     """
     for word in blacklist:
         comments = [re.sub(word, "", comment).strip() for comment in comments]
-    return [comment.title() for comment in comments if comment not in blacklist]
+    return [i.title() for i in comments if i not in blacklist]
 
 
 def get_list_of_people(

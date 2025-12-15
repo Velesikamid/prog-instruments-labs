@@ -4,7 +4,10 @@ from typing import Optional
 
 
 def write_to_file(
-    comments: list[str], path: str, create_dirs: bool = True, overwrite: bool = True
+    comments: list[str],
+    path: str,
+    create_dirs: bool = True,
+    overwrite: bool = True
 ) -> Optional[str]:
     """
     Записывает список комментариев в файл,
