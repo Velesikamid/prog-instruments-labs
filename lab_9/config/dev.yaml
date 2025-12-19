@@ -1,0 +1,25 @@
+﻿# Переопределения для режима разработки
+defaults:
+  - base
+
+# Режим разработки
+dev:
+  debug: true
+  test_mode: true
+  mock_api: false
+
+# Логирование в разработке
+logging:
+  level: "DEBUG"
+  to_file: true
+  console: true
+
+# Настройки для тестов
+parser:
+  timeout: 60
+  mock_responses: false
+
+# Пути для разработки
+paths:
+  test_data: "test_data/"
+  fixtures: "fixtures/"

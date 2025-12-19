@@ -1,0 +1,44 @@
+﻿# Базовые настройки приложения
+app:
+  name: "vk-parser"
+  version: "1.0.0"
+  description: "Парсер комментариев ВКонтакте"
+
+# Настройки логирования
+logging:
+  level: "INFO"
+  to_file: true
+  file_format: "app_%Y%m%d_%H%M%S.log"
+  dir: "logs"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  date_format: "%Y-%m-%d %H:%M:%S"
+
+# Настройки файлового менеджера
+filemanager:
+  create_dirs: true
+  overwrite: true
+  encoding: "utf-8"
+
+# Настройки парсера людей
+list_of_people:
+  pattern: "\\d{4}[-–]\\d{2}.?\\d{2}.?\\d{2}[a-zа-я]?"
+  default_is_students: false
+
+# Настройки парсера VK
+parser:
+  vk_api_url: "https://api.vk.com/method/board.getComments"
+  api_version: "5.199"
+  timeout: 30
+  max_retries: 3
+  batch_size: 100
+  offset: 0
+
+# Настройки JSON
+json:
+  encoding: "utf-8-sig"
+
+# Пути по умолчанию
+paths:
+  settings: "settings.json"
+  output_dir: "results"
+  default_output: "output.txt"

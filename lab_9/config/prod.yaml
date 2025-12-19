@@ -1,0 +1,33 @@
+﻿# Переопределения для продакшена
+defaults:
+  - base
+
+# Режим продакшена
+prod:
+  debug: false
+  test_mode: false
+  performance_mode: true
+
+# Логирование в продакшене
+logging:
+  level: "INFO"
+  to_file: true
+  console: false
+  max_file_size: "10MB"
+  backup_count: 5
+
+# Настройки для продакшена
+parser:
+  timeout: 15
+  max_retries: 5
+
+# Безопасность
+security:
+  hide_token_in_logs: true
+  validate_ssl: true
+
+# Производительность
+performance:
+  use_cache: true
+  cache_ttl: 3600
+  max_concurrent_requests: 3
